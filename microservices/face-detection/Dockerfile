@@ -2,13 +2,12 @@
 FROM python:3.9-slim
 
 # Set the working directory in the container
-WORKDIR .
+WORKDIR /app
 
 # Copy the current directory contents into the container at /app
 COPY . .
 
 RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
     libglib2.0-0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -16,7 +15,8 @@ RUN apt-get update && apt-get install -y \
 # Install any needed dependencies specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN python model.py
+# Fix OpenCV conflict by uninstalling opencv-python and keeping only headless version
+RUN pip uninstall -y opencv-python && pip install --force-reinstall opencv-python-headless==4.5.2.54
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
