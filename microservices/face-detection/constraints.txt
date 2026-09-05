@@ -1,0 +1,2 @@
+# OpenCV 4.5.2 was compiled against NumPy 1.x; do not upgrade to NumPy 2.
+numpy==1.24.3
