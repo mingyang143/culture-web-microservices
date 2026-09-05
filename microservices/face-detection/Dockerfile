@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install any needed dependencies specified in requirements.txt
-COPY requirements.txt constraints.txt .
+COPY requirements.txt constraints.txt ./
 # Apply the ABI constraint to every pip invocation, including later reinstalls.
 ENV PIP_CONSTRAINT=/app/constraints.txt
 RUN pip install --no-cache-dir -r requirements.txt
